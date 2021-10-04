@@ -1,4 +1,4 @@
-module xeno_go/api.go
+module github.com/oliolafsson/GoPython/xeno_go/api.go
 
 go 1.16
 
