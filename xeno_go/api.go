@@ -18,7 +18,7 @@ type Query struct {
 	Parameters map[string]string
 }
 
-func (q Query) GetPage(page int) Response {
+func (q *Query) GetPage(page int) Response {
 
 	// Get Url for page
 	newUrl, err := q.formUrl()
@@ -36,7 +36,7 @@ func (q Query) GetPage(page int) Response {
 	return recordings
 }
 
-func (q Query) GetRecordings() []Recording {
+func (q *Query) GetRecordings() []Recording {
 
 	page1 := q.GetPage(1)
 	recs := append([]Recording{}, page1.Recordings...)
@@ -75,7 +75,7 @@ func (q Query) GetRecordings() []Recording {
 	return recs
 }
 
-func (q Query) loadRecording(recs []Recording, idList []int) error {
+func (q *Query) loadRecording(recs []Recording, idList []int) error {
 
 	// Loop over recordings
 	for _, v := range recs {
@@ -109,7 +109,7 @@ func (q Query) loadRecording(recs []Recording, idList []int) error {
 	return nil
 }
 
-func (q Query) formUrl() (string, error) {
+func (q *Query) formUrl() (string, error) {
 	baseUrl, err := url.Parse("https://www.xeno-canto.org/api/2/recordings")
 	if err != nil {
 		log.Fatal("err")
@@ -139,7 +139,7 @@ func (q Query) formUrl() (string, error) {
 	return newUrl, nil
 }
 
-func (q Query) getResponse(url string, page int) (Response, error) {
+func (q *Query) getResponse(url string, page int) (Response, error) {
 
 	// Append page number
 	if page > 1 {
